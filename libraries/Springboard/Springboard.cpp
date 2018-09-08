@@ -11,36 +11,70 @@
 #include "SPI.h"
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
+#include "graphics.h"
+#include "Mail.h"
 
-// For the Adafruit shield, these are the default.
-#define TFT_DC D1
-#define TFT_CS D2
 
-// Use hardware SPI (on Uno, #13, #12, #11) and the above for CS/DC
-Adafruit_ILI9341 tft = Adafruit_ILI9341(TFT_CS, TFT_DC);
+/*
+int checkForMessage(byte progNum);
+    
+void readMail(byte progNum, char *buffer, int size);
 
+
+void sendMailOut(char *mail, int32_t size);
+*/
 int counter = 0;
 void initSpringboard(){
-    tft.begin();
+
+}
+
+void changeProgram(int x){
+    coreSB->switchToProgram(x);
 }
 
 void drawSpringboard(){
-  tft.fillScreen(ILI9341_BLACK);
-  yield();
-  tft.fillScreen(ILI9341_RED);
-  yield();
-  tft.fillScreen(ILI9341_GREEN);
-  yield();
-  tft.fillScreen(ILI9341_BLUE);
-  yield();
-  tft.fillScreen(ILI9341_BLACK);
-  yield();
+    fillScreen(LIGHTGREY);
+    for (int i = 0; i < numPrograms; i++){
+        add_button(20 + i * 70, 100, 60, 60, 2, i + 1, 2, programStrings[i], WHITE, BLACK, changeProgram);
+    }
+    draw_all_buttons();
+    drawText("Home", 60, 10, BLACK, 8);
+}
+
+void drawSpringboard2(){
+    fillScreen(RED);
+    
+}
+
+void setCore(BackboneCore *c){
+    coreSB = c;
 }
 
 void runSpringboard(int delta){
 	
-	Serial.println("hello world");
-	program->pushToState(1);
+}
+
+void runFakeboard(int delta){
+    int mailSize = checkForMessage(1);
+    
+    if (mailSize > 0){
+        Serial.println("GOT MAIL");
+        char buffer[mailSize + 1];
+        readMail(1, buffer, mailSize);
+        buffer[mailSize] = 0;
+        Serial.print("receivedMail: ");
+        Serial.println(buffer);
+    }
+    char *a = (char*)malloc(6);
+    a[0] = 'h';
+    a[1] = 'u';
+    a[2] = 'l';
+    a[3] = 'l';
+    a[4] = 'o';
+    a[5] = 0;
+
+    program->sendMailOut(a, 12);
+   // program->pushToState(1);
 }
 
 void runSpringboard2(int delta){
@@ -53,10 +87,21 @@ BackboneProgram* makeSpringboard(){
     BackboneScreen* main = new BackboneScreen(initSpringboard, drawSpringboard, runSpringboard);
     springboard->addScreen(main);
 
-    BackboneScreen* second = new BackboneScreen(initSpringboard, drawSpringboard, runSpringboard2);
+    program = springboard;
+
+    return springboard;
+}
+
+BackboneProgram* makeSpringboard2(){
+    BackboneProgram* springboard = new BackboneProgram(0);
+    BackboneScreen* main = new BackboneScreen(initSpringboard, drawSpringboard2, runFakeboard);
+    springboard->addScreen(main);
+
+    BackboneScreen* second = new BackboneScreen(initSpringboard, drawSpringboard2, runSpringboard2);
     springboard->addScreen(second);
 
     program = springboard;
 
     return springboard;
 }
+

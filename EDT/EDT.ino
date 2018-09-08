@@ -14,6 +14,7 @@
 #include <Springboard.h>
 #include <painlessMesh.h>
 #include <FS.h>
+#include <graphics.h>
 
 Scheduler userScheduler;
 BackboneCore *core = new BackboneCore();
@@ -26,12 +27,16 @@ Task runBackbone(TASK_SECOND * 0, TASK_FOREVER, &runBackboneCall);
 
 void setup() {
   SPIFFS.begin();
+  graphics_begin();
+  setCore(core);
   network.init("ESP MESH", "notwiththatattitude", 5555);
   network.onReceive (&receivedCallback);
   network.onNewConnection (&newConnectionCallback);
   Serial.begin(9600); 
   
   core->addProgram(makeSpringboard());
+  core->addProgram(makeSpringboard2());
+  core->addProgram(makeSpringboard2());
   core->initBackbone();
 
   userScheduler.addTask(taskSendMessage);

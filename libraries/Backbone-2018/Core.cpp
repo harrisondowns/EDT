@@ -9,6 +9,7 @@
 #include "Core.h"
 #include "Arduino.h"
 #include "Mail.h"
+#include "graphics.h"
 
 
 BackboneCore::BackboneCore(){
@@ -20,6 +21,7 @@ void BackboneCore::initBackbone(){
 }
 
 void BackboneCore::runBackbone(int delta){
+    check_touch();
     currentProgram->run(delta);
     checkForProgramMail();
 }
@@ -61,6 +63,7 @@ bool BackboneCore::hasMail(){
 
 String BackboneCore::getMail(){
     char *m = outgoingMail.back();
+    Serial.println(m);
     int32_t size = outgoingMailSize.back();
     outgoingMail.pop_back();
     outgoingMailSize.pop_back();

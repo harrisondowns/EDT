@@ -49,6 +49,7 @@ int add_button(int x, int y, int height, int width, int radius, int parameter, i
   new_button->width = width;
   new_button->text = text;
   new_button->radius = radius;
+  new_button->text_size = text_size;
   new_button->text_color = text_color;
   new_button->background_color = background_color;
   new_button->parameter = parameter;
@@ -146,12 +147,9 @@ void clear_buttons() {
 
 void draw_button(int index) {
   button *temp = button_vector[index];
-  Serial.println(temp->x);
-  Serial.println(temp->y);
-  Serial.println(temp->width);
-  Serial.println(temp->height);
-  fillRect(temp->x, temp->y, temp->width, temp->height, /*temp->radius,*/ WHITE);
-  //drawText(temp->text, temp->x + 5, temp->y + 5, temp->text_color, temp->text_size);
+
+  fillRect(temp->x, temp->y, temp->width, temp->height, /*temp->radius,*/ temp->background_color);
+  drawText(temp->text, temp->x + 5, temp->y + (temp->height / 2) - (temp->text_size * 2), temp->text_color, temp->text_size);
   //yield();
 
 }

@@ -30,7 +30,6 @@ public:
 	void sendMail(char *message, int size);
 	bool hasMail();
 	String getMail();
-
 private:
 	vector<BackboneProgram*> programs;
 	vector<char*> outgoingMail;
