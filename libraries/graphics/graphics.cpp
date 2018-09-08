@@ -175,7 +175,7 @@ void draw_all_buttons() {
 
 TS_Point check_touch() {
         TS_Point point = ts.getPoint();
-        if (ts.touched()) {
+        if (ts.touched() && point.z > 1100) {
                 int x = ((float)(point.x - 250) / (float)(3720 - 250)) * 320;
                 int y = ((float)(point.y - 250) / (float)(3880 - 250)) * 240;
                 check_press(x, y);
