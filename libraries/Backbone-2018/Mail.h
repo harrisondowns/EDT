@@ -19,7 +19,8 @@ void newMessage(String message);
 int checkForMessage(byte progNum);
 	
 void readMail(byte progNum, char *buffer, int size);
-
-
+void writeToFile(String fn, String message);
+String readFile(String fn);
+bool fileExists(String fn);
 #endif /* Mail_hpp */
 
