@@ -12,6 +12,10 @@
 #include <stdio.h>
 #include "Arduino.h"
 
+
+static int NO_CHANGE = -2;
+static int POP_STATE = -1;
+
 class BackboneScreen {
 public:
     typedef void (*DrawFunc)();
