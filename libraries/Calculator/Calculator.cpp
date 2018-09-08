@@ -114,7 +114,7 @@ void drawGrapher(){
   add_button(3, //x
 	     3, //y
 	     50,//w
-	     17,//h
+	     19,//h
 	     0, //r
 	     GRAPHER_SCREEN, //screen
 	     2, //textSize
@@ -139,7 +139,7 @@ void drawGraph(){
   add_button(3, //x
 	     3, //y
 	     50,//w
-	     17,//h
+	     19,//h
 	     0, //r
 	     GRAPHER_SCREEN, //screen
 	     2, //textSize
@@ -208,7 +208,7 @@ void drawGraph(){
     Serial.println(x2);
     Serial.println(y2);
     
-    drawLine(x2, y2, x1, y1, BLACK);
+    drawLine(x2, y2, x1, y1, RED);
     
   } else {
     drawText("Please set       both slope       and intercept", 3, 40, RED, 3);
