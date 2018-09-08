@@ -1,3 +1,6 @@
+#ifndef graphics_h
+#define graphics_h
+
 #include "Adafruit_GFX.h"
 #include "Adafruit_ILI9341.h"
 #include "SPI.h"
@@ -82,3 +85,5 @@ void clear_buttons();
 void draw_all_buttons();
 
 TS_Point check_touch();
+
+#endif
