@@ -29,9 +29,9 @@ void BackboneProgram::addScreen(BackboneScreen *bs){
 }
 
 void BackboneProgram::checkForStateChange(){
-    if (currentScreen->pollForStateChange() != -2){
+    if (currentScreen->pollForStateChange() != NO_CHANGE){
         int change = currentScreen->pollForStateChange();
-        if (change == -1){
+        if (change == POP_STATE){
             popState(0);
         }
         else if (change >= 0){

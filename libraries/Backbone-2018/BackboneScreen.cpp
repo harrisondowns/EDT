@@ -12,20 +12,20 @@ BackboneScreen::BackboneScreen(InitFunc i, DrawFunc d, RunFunc r){
     initF = i;
     drawF = d;
     runF = r;
-    shouldChangeState = -2;
+    shouldChangeState = NO_CHANGE;
     initialized = false;
 }
 
 void BackboneScreen::init(){
     if (initialized == false){
-        shouldChangeState = -2;
+        shouldChangeState = NO_CHANGE;
         initialized = true;
         initF();
     }
 }
 
 void BackboneScreen::draw(){
-    shouldChangeState = -2;
+    shouldChangeState = NO_CHANGE;
     drawF();
 }
 
@@ -38,7 +38,7 @@ int BackboneScreen::pollForStateChange(){
 }
 
 void BackboneScreen::popState(int rip){
-    shouldChangeState = -1;
+    shouldChangeState = POP_STATE;
 }
 
 void BackboneScreen::pushToState(int state){
