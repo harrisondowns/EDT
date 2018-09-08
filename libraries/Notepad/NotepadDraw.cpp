@@ -9,10 +9,12 @@
 #include "NotepadDraw.h"
 #include "NotepadGlobals.h"
 #include "graphics.h"
+#include "Mail.h"
+#include "Arduino.h"
 //#include "Mail.h"
 
 void initNotepadDraw(){
-    Serial.println("hullo");
+
 }
 
 uint16_t colors[8] = {WHITE, BLACK, DARKGREY, RED, BLUE, GREEN, ORANGE, PINK};
@@ -23,6 +25,9 @@ int conX = 10;
 int conY = 45;
 
 int currentColor = 0;
+
+byte pixelBuffer[1600];
+
 
 void swapColor(int x){
     if (x != currentColor){
@@ -40,15 +45,53 @@ void notepadPop(int x){
     notepadProgram->popState(0);
 }
 void notepadShare(int a){
+    /*for (int i = 0; i < 1600; i++){
+        Serial.print(pixelBuffer[i]);
+        if (i % 40 == 0){
+            Serial.println("|");
+            yield();
+        }
+    }*/
+
+    writeToFile("Notepad" + String(pushNote), String((char*)pixelBuffer));
+    yield();
 
 }
-
-
 
 void drawNotepadDraw(){
     
     fillScreen(BLACK);
-    fillRect(80, 0, 240, 240, WHITE);
+    if (fileExists("Notepad" + String(pushNote))){
+        String read = readFile("Notepad" + String(pushNote));
+
+        for (int y = 0; y < 40; y++){
+            for (int x = 0; x < 40; x++){
+               // Serial.print((byte)(read[y * 40 + x]));
+                if ((byte)(read[0]) == 0){
+                    pixelBuffer[40 * y + x] = 64; 
+                }
+                else{
+                    pixelBuffer[40 * y + x] = read[y * 40 + x];
+                }
+            }
+           // Serial.println("");
+            yield();
+        }
+    
+   
+        for (int y = 0; y < 40; y++){
+            for (int x = 0; x < 40; x++){
+                fillRect(80 + (x * 6), 0 + (y * 6), 6, 6, colors[pixelBuffer[y * 40 + x] - 64]);
+            }
+            yield();
+        }
+    } else{
+        for (int i = 0; i < 1600; i++){
+            pixelBuffer[i] = 64;
+        }
+        fillRect(80, 0, 240, 240, WHITE);
+    }
+    
 
     
 
@@ -87,9 +130,12 @@ void runNotepadDraw(int delta){
 	TS_Point pt = check_touch();
     if (pt.x != -1 && pt.y != -1){
         if (pt.x >= 80){
-            int x = (pt.x / 8) * 8;
-            int y = (pt.y / 8) * 8;
-            fillRect(x, y, 8, 8, colors[currentColor]);
+            int x = (pt.x / 6) * 6;
+            int y = (pt.y / 6) * 6;
+            int px = ((pt.x - 80) / 6);
+            int py = (pt.y / 6);
+            pixelBuffer[py * 40 + px] = currentColor + 64;
+            fillRect(px * 6 + 80, py * 6, 6, 6, colors[currentColor]);
         }
     }
 }
