@@ -1,6 +1,7 @@
 # Ignore everything
 /*
 # Recursively allow files under subtree
+!/libraries/Backbone-2018/
 !/EDT/
 # You can be specific with these rules
 !.gitignore
