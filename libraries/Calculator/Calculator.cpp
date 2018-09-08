@@ -16,8 +16,8 @@
 #define GRAPH_SCREEN 2
 #define KEYBOARD 3
 
-int slope;
-int intercept;
+double slope;
+double intercept;
 boolean slopeSet;
 boolean interceptSet;
 boolean settingSlope;
@@ -123,7 +123,6 @@ void drawGrapher(){
 	     PINK, //ScreenColor
 	     popScreen //changeScreen
 	     );
- 
   draw_all_buttons();
 }
 
@@ -149,6 +148,71 @@ void drawGraph(){
 	     PINK, //ScreenColor
 	     popScreen //changeScreen
 	     );
+  if (slopeSet and interceptSet) {
+    int h = height();
+    int w = width();
+    double xmax;
+    double ymax;
+    double xmin;
+    double ymin;
+    double numTicks = 10;
+    double maxMax = numTicks / 2;
+    // vertical axis
+    drawLine(w / 2, 0, w / 2, h, BLACK);
+    // horizontal axis
+    drawLine(0, h / 2, w, h / 2, BLACK);
+    // vertical ticks
+    for (int i = 0; i < h; i = i + h / numTicks) {
+      drawLine(w / 2 - 4, i, w / 2 + 4, i, BLACK);
+    }
+    // horizontal ticks
+    for (int i = 0; i < w; i = i + w / numTicks) {
+      drawLine(i, h / 2 - 4, i, h / 2 + 4, BLACK);
+    }
+    // the line:
+    
+      //y = mx + b => if y is 5 then
+      //             (5 - b) / m = x
+    xmax = (maxMax - intercept) / slope;
+    Serial.println("max b m x");
+    Serial.println(maxMax);
+    Serial.println(intercept);
+    Serial.println(slope);
+    Serial.println(xmax);
+    if (xmax > maxMax) {
+      // y = mx + b => if x is 5 then
+      //               y = m * 5 + b
+      ymax = maxMax * slope + intercept;
+      xmax = maxMax;
+    } else {
+      ymax = maxMax;
+    }
+      // repeat logic with -maxMax
+    xmin = (-maxMax - intercept) / slope;
+    if (xmin < -maxMax) {
+      ymin = -maxMax * slope + intercept;
+      xmin = -maxMax;
+    } else {
+      ymin = -maxMax;
+    }
+
+      // scale it: divide by maxMax, multiply by w / 2, h / 2 (for x, y), and that nmis the shift from the screen center
+    int x1 = (xmax / maxMax) * (w / 2) + w / 2;
+    int y1 = (ymax / maxMax) * (h / 2) + h / 2;
+    int x2 = (xmin / maxMax) * (w / 2) + w / 2;
+    int y2 = (ymin / maxMax) * (h / 2) + h / 2;
+
+    Serial.println("printing x1 y1 x2 y2");
+    Serial.println(x1);
+    Serial.println(y1);
+    Serial.println(x2);
+    Serial.println(y2);
+    
+    drawLine(-x2, -y2, -x1, -y1, BLACK); // negate because of weird flippy doo da
+    
+  } else {
+    drawText("Please set       both slope       and intercept", 3, 40, RED, 3);
+  }
   draw_all_buttons();
 }
 

@@ -42,8 +42,10 @@ void finish(int param) {
 }
 
 void numDraw() {
-        used = 0;
-        input = "";
+        for (int i = 0; i < used; i++) {
+	  input[i] = ' ';
+	}
+	used = 0;
         input[MaxLength] = '\0';
         int keyWidth = 38;
         int keyHeight = 38;
