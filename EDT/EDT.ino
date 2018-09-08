@@ -12,6 +12,7 @@
 
 #include <Core.h>
 #include <Springboard.h>
+#include <Notepad.h>
 #include <painlessMesh.h>
 #include <FS.h>
 #include <graphics.h>
@@ -37,7 +38,7 @@ void setup() {
   
   core->addProgram(makeSpringboard());
   core->addProgram(makeCalculator());
-  core->addProgram(makeSpringboard2());
+  core->addProgram(makeNotepad());
   core->initBackbone();
 
   userScheduler.addTask(taskSendMessage);
@@ -64,7 +65,7 @@ void sendMessage(){
       network.sendBroadcast(msg);
       Serial.printf("Sending message: %s\n", msg.c_str());
   }
-  taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));
+  taskSendMessage.setInterval( TASK_SECOND * 5);
 }
 
 void runBackboneCall(){

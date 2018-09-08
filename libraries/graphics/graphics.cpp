@@ -32,6 +32,7 @@ using namespace std;
 
 vector<button *> button_vector;
 
+bool touchDown = false;
 
 void graphics_begin() {
   tft.begin();
@@ -57,15 +58,19 @@ int add_button(int x, int y, int height, int width, int radius, int parameter, i
   Serial.println(new_button->x);
   Serial.println(new_button->y);
   button_vector.push_back(new_button);
-  return button_vector.size();
+  return button_vector.size() - 1;
 }
 
 void check_press(int x, int y) {
-  for (int i = 0; i < button_vector.size(); i++) {
-    if ((x > button_vector[i]->x and x < (button_vector[i]->x + button_vector[i]->width)) and (y > button_vector[i]->y and y < (button_vector[i]->y + button_vector[i]->height))) {
-      button_vector[i]->func(button_vector[i]->parameter);
+  if (touchDown == false){
+    for (int i = 0; i < button_vector.size(); i++) {
+      if ((x > button_vector[i]->x and x < (button_vector[i]->x + button_vector[i]->width)) and (y > button_vector[i]->y and y < (button_vector[i]->y + button_vector[i]->height))) {
+        button_vector[i]->func(button_vector[i]->parameter);
+        touchDown = true;
+        break;
+      }
+      yield();
     }
-    yield();
   }
 }
 
@@ -151,26 +156,27 @@ void draw_button(int index) {
 
   fillRect(temp->x, temp->y, temp->width, temp->height, /*temp->radius,*/ temp->background_color);
   drawText(temp->text, temp->x + 5, temp->y + (temp->height / 2) - (temp->text_size * 2), temp->text_color, temp->text_size);
-  //yield();
-
+  yield();
 }
 
 void draw_all_buttons() {
         for (int i = 0; i < button_vector.size(); i++) {
                 draw_button(i);
         }
+        yield();
 }
 
 TS_Point check_touch() {
         TS_Point point = ts.getPoint();
         if (ts.touched()) {
-                int x = ((float)point.x / (float)4096) * 320;
-                int y = ((float)point.y / (float)4096) * 240;
+                int x = ((float)(point.x - 250) / (float)(3720 - 250)) * 320;
+                int y = ((float)(point.y - 250) / (float)(3880 - 250)) * 240;
                 check_press(x, y);
                 point.x = x;
                 point.y = y;
                 return point;
         } else {
+                touchDown = false;
                 point.x = -1;
                 point.y = -1;
                 return point;
