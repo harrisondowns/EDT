@@ -25,6 +25,8 @@ void add_num(int index) {
 }
 
 void KeyboardInit() {
+        used = 0;
+        flagged = false;
 
 }
 
@@ -33,6 +35,7 @@ void alphaDraw() {
 }
 
 void finish(int param) {
+        Serial.println("finished");
         flagged = true;
 }
 
