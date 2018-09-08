@@ -40,20 +40,36 @@ void setIntercept(int screen) {
   changeScreen(screen);
 }
 
+void checkParams() {
+  if (check_flag()) {
+    char *num = get_val();
+    int offset = 1;
+    if (settingSlope) {
+      slopeSet = true;
+      slope = atoi(num);
+    } else {
+      interceptSet = true;
+      intercept = atoi(num);
+    }
+  }
+
+}
+
 void initGrapher(){
 }
 
 void drawGrapher(){
+  checkParams();
   fillScreen(WHITE);
   int h = height();
   int w = width();
   drawText("Slope:",  w / 4, h / 4, BLACK, 3);
   drawText("Intercept:", w / 4, h / 2, BLACK, 3);
   // graph it button
-  add_button(w / 3.5, //x
+  add_button(w / 4, //x
 	     h * 3 / 4, //y
-	     200,//w
-	     30,//h
+	     175,//w
+	     35, //h
 	     0, //r
 	     GRAPH_SCREEN, //screen
 	     3, //textSize
@@ -66,7 +82,7 @@ void drawGrapher(){
   if (slopeSet) {
     itoa(slope, text, 10);
   }
-  add_button(w * 3 / 4, //x
+  add_button(w * 3 / 4 + 10, //x
 	     h / 4, //y
 	     40,//w
 	     15,//h
@@ -83,7 +99,7 @@ void drawGrapher(){
   if (interceptSet) {
     text = itoa(intercept, text, 10);
   }
-  add_button(w * 3 / 4, //x
+  add_button(w * 3 / 4 + 10, //x
 	     h / 2, //y
 	     40,//w
 	     15,//h
@@ -95,24 +111,23 @@ void drawGrapher(){
 	     LIGHTGREY, //ScreenColor
 	     setIntercept //changeScreen
 	     );
+  add_button(3, //x
+	     3, //y
+	     50,//w
+	     17,//h
+	     0, //r
+	     GRAPHER_SCREEN, //screen
+	     2, //textSize
+	     "back", //text
+	     BLACK, //textColor
+	     PINK, //ScreenColor
+	     popScreen //changeScreen
+	     );
+ 
   draw_all_buttons();
 }
 
 void runGrapher(int delta){
-  if (check_flag()) {
-    char *num = get_val();
-    int offset = 1;
-    if (settingSlope) {
-      slopeSet = true;
-      slope = atoi(num);
-      offset = 4;
-    } else {
-      interceptSet = true;
-      intercept = atoi(num);
-      offset = 2;
-    }
-    drawText(num, width() * 3 / 4, height() / offset, BLACK, 2);
-  }
 }
 
 void initGraph(){
@@ -122,16 +137,16 @@ void initGraph(){
 void drawGraph(){
   fillScreen(WHITE);
   // go back button
-  add_button(20, //x
-	     30, //y
-	     40,//w
-	     15,//h
+  add_button(3, //x
+	     3, //y
+	     50,//w
+	     17,//h
 	     0, //r
 	     GRAPHER_SCREEN, //screen
-	     3, //textSize
-	     "go back!", //text
+	     2, //textSize
+	     "back", //text
 	     BLACK, //textColor
-	     LIGHTGREY, //ScreenColor
+	     PINK, //ScreenColor
 	     popScreen //changeScreen
 	     );
   draw_all_buttons();
