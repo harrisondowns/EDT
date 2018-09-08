@@ -54,10 +54,13 @@ void drawLine(int x1, int y1, int x2, int y2,
           uint16_t );
 
 void drawRect(int16_t x, int16_t y, int16_t w, int16_t h,
-          uint16_t);
+          uint16_t c);
 
 void fillRect(int16_t x, int16_t y, int16_t w, int16_t h,
-          uint16_t);
+          uint16_t c);
+
+void drawRectWithBorder(int16_t x, int16_t y, int16_t w, int16_t h,
+			uint16_t c_fill, uint16_t c_border);
 
 void fillScreen(uint16_t );
 
