@@ -35,8 +35,8 @@ private:
     RunFunc runF;
     int shouldChangeState;
     bool initialized;
-    void pushToState(int state);
-    void popState(int rip);
+   // void pushToState(int state);
+   // void popState(int rip);
     
 };
 

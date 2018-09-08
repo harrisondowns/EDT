@@ -36,11 +36,11 @@ void BackboneScreen::run(int delta){
 int BackboneScreen::pollForStateChange(){
     return shouldChangeState;
 }
-
+/*
 void BackboneScreen::popState(int rip){
     shouldChangeState = POP_STATE;
 }
 
 void BackboneScreen::pushToState(int state){
     shouldChangeState = state;
-}
+}*/
