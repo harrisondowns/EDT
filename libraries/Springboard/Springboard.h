@@ -11,8 +11,10 @@
 
 #include <stdio.h>
 #include "BackboneProgram.h"
+#include "Core.h"
 
 BackboneProgram* makeSpringboard();
-
+BackboneProgram* makeSpringboard2();
+void setCore(BackboneCore *c);
 
 #endif /* Springboard_hpp */
