@@ -34,6 +34,7 @@ public:
     char* getMail();
 
     byte progNum = 0;
+    bool goToSpringboard = false;
     
 private:
     char *buffer;

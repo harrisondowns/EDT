@@ -53,10 +53,15 @@ void BackboneProgram::pushToState(int state){
 
 void BackboneProgram::popState(int rip){
     clear_buttons();
-    currentScreen = stack.back();
-    currentScreen->init();
-    currentScreen->draw();
-    stack.pop_back();
+    if (stack.size() != 0){
+        currentScreen = stack.back();
+        currentScreen->init();
+        currentScreen->draw();
+        stack.pop_back();
+    }
+    else{
+        goToSpringboard = true;
+    }
 }
 
 void BackboneProgram::sendMailOut(char *mail, int32_t size){
