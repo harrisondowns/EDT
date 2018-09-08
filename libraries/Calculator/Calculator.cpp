@@ -327,7 +327,7 @@ void setOperand(int op) {
 
 void drawCalculator(){
     fillScreen(ORANGE);
-    add_button(10, 42, 70, 50, 0, GRAPHER_SCREEN, 2, "graph", GREEN, YELLOW, changeScreen);
+    add_button(10, 42, 70, 50, 0, GRAPHER_SCREEN, 2, "graph", LIGHTGREY, BLUE, changeScreen);
     drawText("Calculator", 70, 10, BLACK, 4);
 
     fillRect(90, 50, 180, 35, BLACK);
@@ -340,6 +340,18 @@ void drawCalculator(){
     add_button(15, 100, 55, 55, 0, DIVIDE, 4, "/", WHITE, BLACK, setOperand);
     add_button(160, 100, 55, 55, 0, ADD, 4, "+", WHITE, BLACK, setOperand);
     add_button(225, 100, 55, 55, 0, SUBTRACT, 4, "-", WHITE, BLACK, setOperand);
+    add_button(3, //x
+	       3, //y
+	       50,//w
+	       19,//h
+	       0, //r
+	       GRAPHER_SCREEN, //screen
+	       2, //textSize
+	       "back", //text
+	       BLACK, //textColor
+	       PINK, //ScreenColor
+	       popScreen //changeScreen
+	       );
     draw_all_buttons();
 }
 
