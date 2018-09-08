@@ -16,14 +16,24 @@
 #define GRAPH_SCREEN 2
 #define KEYBOARD 3
 
-double slope;
-double intercept;
+#define MULTIPLY 1
+#define DIVIDE 2
+#define ADD 3
+#define SUBTRACT 4
+
+int slope;
+int intercept;
 boolean slopeSet;
 boolean interceptSet;
 boolean settingSlope;
 
-void changeScreen(int screen) {
-  calcProgram->pushToState(screen);
+int arg1;
+int arg2;
+int operand;
+char expression[15];
+
+void changeScreen(int program) {
+  calcProgram->pushToState(program);
 }
 
 void popScreen(int screen) {
@@ -38,6 +48,10 @@ void setSlope(int screen) {
 void setIntercept(int screen) {
   settingSlope = false;
   changeScreen(screen);
+}
+
+void setArg1(int screen) {
+
 }
 
 void checkParams() {
@@ -216,19 +230,117 @@ void drawGraph(){
   draw_all_buttons();
 }
 
+void clearExpression(int rip) {
+    arg1 = 0;
+    arg2 = 0;
+    operand = 0;
+    fillRect(90, 50, 180, 35, BLACK);
+    sprintf(expression, "%d", arg1);
+    drawText(expression, 245, 60, WHITE, 3);
+}
+
 void runGraph(int delta){
 
 }
 
 void initCalculator(){
+    arg1 = 0;
+    arg2 = 0;
+    operand = 0;
+}
 
+void setArgs(int screen) {
+    changeScreen(screen);
+}
+
+void drawExpression() {
+
+    if(operand != 0) {
+        arg2 = atoi(get_val());
+    }
+    else {
+        arg1 = atoi(get_val());
+    }
+
+    if(operand != 0){
+        if (operand == MULTIPLY ) {
+            arg1 = arg1 * arg2;
+            arg2 = 0;
+            operand = 0;
+            sprintf(expression, "%d", arg1);
+        } 
+        else if (operand == DIVIDE ) {
+            if(arg2 != 0) {
+                arg1 = arg1 / arg2;
+            }
+            arg2 = 0;
+            operand = 0;
+            sprintf(expression, "%d", arg1);
+        }
+        else if (operand == ADD ) {
+            arg1 = arg1 + arg2;
+            arg2 = 0;
+            operand = 0;
+            sprintf(expression, "%d", arg1);
+        }
+        else if (operand == SUBTRACT ) {
+            arg1 = arg1 - arg2;
+            arg2 = 0;
+            operand = 0;
+            sprintf(expression, "%d", arg1);
+        }
+    }
+    else {
+        sprintf(expression, "%d", arg1);
+    }
+
+    drawText(expression, 245 - (strlen(expression) - 1) * 17, 60, WHITE, 3);
+}
+
+void setOperand(int op) {
+    int len;
+    if(operand == 0){
+        len = strlen(expression);
+    }
+    else {
+        len = strlen(expression) - 1;
+    }
+    operand = op;
+    fillRect(90, 50, 180, 35, BLACK);
+    if(len >= 15){
+
+    }
+    else if (op == MULTIPLY ) {
+        expression[len] = 'x';
+    }
+    else if ( op == DIVIDE ) {
+         expression[len] = '/';
+    }
+    else if ( op == SUBTRACT ) {
+         expression[len] = '-';
+    }
+    else if ( op == ADD ) {
+         expression[len] = '+';
+    }
+    drawText(expression, 245 - (strlen(expression) - 1) * 17, 60, WHITE, 3);
 }
 
 void drawCalculator(){
     fillScreen(ORANGE);
-    add_button(10, 10, 60, 60, 0, GRAPHER_SCREEN, 6, "graph", GREEN, YELLOW, changeScreen);
+    add_button(10, 42, 70, 50, 0, GRAPHER_SCREEN, 2, "graph", GREEN, YELLOW, changeScreen);
+    drawText("Calculator", 70, 10, BLACK, 4);
+
+    fillRect(90, 50, 180, 35, BLACK);
+    drawExpression();
+    //drawText(expression, 245, 60, WHITE, 3);
+
+    add_button(15, 170, 180, 55, 0, KEYBOARD, 3, "Num", WHITE, BLACK, setArgs);
+    add_button(215, 170, 90, 55, 0, 0, 2, "Clear", WHITE, BLACK, clearExpression);
+    add_button(85, 100, 55, 55, 0, MULTIPLY, 4, "x", WHITE, BLACK, setOperand);
+    add_button(15, 100, 55, 55, 0, DIVIDE, 4, "/", WHITE, BLACK, setOperand);
+    add_button(160, 100, 55, 55, 0, ADD, 4, "+", WHITE, BLACK, setOperand);
+    add_button(225, 100, 55, 55, 0, SUBTRACT, 4, "-", WHITE, BLACK, setOperand);
     draw_all_buttons();
-    drawText("Calculator", 70, 10, BLACK, 8);
 }
 
 void runCalculator(int delta){
