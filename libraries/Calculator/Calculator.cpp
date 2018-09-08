@@ -1,5 +1,5 @@
 //
-//  Springboard.cpp
+//  Calculator.cpp
 //  Backbone-2018.Tests
 //
 //  Created by Harrison Downs on 7/8/18.
@@ -18,9 +18,26 @@
 
 int slope;
 int intercept;
+boolean slopeSet;
+boolean interceptSet;
+boolean settingSlope;
 
-void changeScreen(int program) {
-  calcProgram->pushToState(program);
+void changeScreen(int screen) {
+  calcProgram->pushToState(screen);
+}
+
+void popScreen(int screen) {
+  calcProgram->popState(screen);
+}
+
+void setSlope(int screen) {
+  settingSlope = true;
+  changeScreen(screen);
+}
+
+void setIntercept(int screen) {
+  settingSlope = false;
+  changeScreen(screen);
 }
 
 void initGrapher(){
@@ -33,47 +50,69 @@ void drawGrapher(){
   drawText("Slope:",  w / 4, h / 4, BLACK, 3);
   drawText("Intercept:", w / 4, h / 2, BLACK, 3);
   // graph it button
-  add_button(w / 2, //x
+  add_button(w / 3.5, //x
 	     h * 3 / 4, //y
-	     40,//w
-	     15,//h
+	     200,//w
+	     30,//h
 	     0, //r
 	     GRAPH_SCREEN, //screen
 	     3, //textSize
 	     "graph it!", //text
 	     BLACK, //textColor
-	     LIGHTGREY, //ScreenColor
+	     BLUE, //ScreenColor
 	     changeScreen ); //changeScreen
+  char *text = "__            \0";
   // slope button
+  if (slopeSet) {
+    itoa(slope, text, 10);
+  }
   add_button(w * 3 / 4, //x
 	     h / 4, //y
 	     40,//w
 	     15,//h
 	     0, //r
 	     KEYBOARD, //screen
-	     3, //textSize
-	     "__", //text
+	     2, //textSize
+	     text, //text
 	     BLACK, //textColor
 	     LIGHTGREY, //ScreenColor
-	     changeScreen //changeScreen
+	     setSlope //changeScreen
 	     );
   // intercept button
+  text = "__               \0";
+  if (interceptSet) {
+    text = itoa(intercept, text, 10);
+  }
   add_button(w * 3 / 4, //x
 	     h / 2, //y
 	     40,//w
 	     15,//h
 	     0, //r
 	     KEYBOARD, //screen
-	     3, //textSize
-	     "__", //text
+	     2, //textSize
+	     text, //text
 	     BLACK, //textColor
 	     LIGHTGREY, //ScreenColor
-	     changeScreen //changeScreen
+	     setIntercept //changeScreen
 	     );
+  draw_all_buttons();
 }
 
 void runGrapher(int delta){
-
+  if (check_flag()) {
+    char *num = get_val();
+    int offset = 1;
+    if (settingSlope) {
+      slopeSet = true;
+      slope = atoi(num);
+      offset = 4;
+    } else {
+      interceptSet = true;
+      intercept = atoi(num);
+      offset = 2;
+    }
+    drawText(num, width() * 3 / 4, height() / offset, BLACK, 2);
+  }
 }
 
 void initGraph(){
@@ -93,9 +132,9 @@ void drawGraph(){
 	     "go back!", //text
 	     BLACK, //textColor
 	     LIGHTGREY, //ScreenColor
-	     changeScreen //changeScreen
+	     popScreen //changeScreen
 	     );
-	     
+  draw_all_buttons();
 }
 
 void runGraph(int delta){
@@ -118,22 +157,14 @@ void runCalculator(int delta){
 }
 
 BackboneProgram* makeCalculator(){
-  Serial.println("hi");
   BackboneProgram* calculator = new BackboneProgram(0);
-  Serial.println("by");
   BackboneScreen* main = new BackboneScreen(initCalculator, drawCalculator, runCalculator);
-  Serial.println("yo");
   BackboneScreen* graphHome = new BackboneScreen(initGrapher, drawGrapher, runGrapher);
-  Serial.println("dsf");
   BackboneScreen* graph = new BackboneScreen(initGraph, drawGraph, runGraph);
-  Serial.println("yike");
   calculator->addScreen(main);
-  Serial.println("ni");
   calculator->addScreen(graphHome);
-  Serial.println("sdf");
   calculator->addScreen(graph);
-  Serial.println("done");
-  //    calculator->addScreen(getKeyboard(1));
+  calculator->addScreen(getKeyboard(1, calculator));
   calcProgram = calculator;
   
   return calculator;

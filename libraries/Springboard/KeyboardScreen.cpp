@@ -97,6 +97,7 @@ boolean check_flag() {
 }
 
 char *get_val() {
+        flagged = false;
         return input;
 }
 
