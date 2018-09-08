@@ -9,6 +9,7 @@
 
 BackboneScreen *getKeyboard(int, BackboneProgram *);
 void numDraw();
+void alphaDraw();
 void KeyboardRun(int);
 boolean check_flag();
 char *get_val();
