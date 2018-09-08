@@ -25,10 +25,18 @@ void callNote(int id){
 	notepadProgram->pushToState(NOTEPAD_DRAW);
 }
 
+void popToSb(int rip){
+	notepadProgram->popState(rip);
+}
+
 void drawNotepadHome(){
     fillScreen(LIGHTGREY);
+
+    int n = add_button(10, 10, 60, 60, 2, 0, 2, "BACK", WHITE, BLACK, popToSb);
+    draw_button(n);
+
     for (int i = 0; i < numNotes; i++){
-        int n = add_button(20 + i * 70, 100, 60, 60, 2, i + 1, 2, "", WHITE, BLACK, callNote);
+        n = add_button(20 + i * 70, 100, 60, 60, 2, i + 1, 2, "", WHITE, BLACK, callNote);
         draw_button(n);
     }
     drawText("Notes", 60, 10, BLACK, 8);
