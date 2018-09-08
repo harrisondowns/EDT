@@ -15,6 +15,7 @@
 #include <painlessMesh.h>
 #include <FS.h>
 #include <graphics.h>
+#include <Calculator.h>
 
 Scheduler userScheduler;
 BackboneCore *core = new BackboneCore();
@@ -35,7 +36,7 @@ void setup() {
   Serial.begin(9600); 
   
   core->addProgram(makeSpringboard());
-  core->addProgram(makeSpringboard2());
+  core->addProgram(makeCalculator());
   core->addProgram(makeSpringboard2());
   core->initBackbone();
 
