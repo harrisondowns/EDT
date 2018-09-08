@@ -24,6 +24,10 @@ void BackboneCore::runBackbone(int delta){
     check_touch();
     currentProgram->run(delta);
     checkForProgramMail();
+    if (currentProgram->goToSpringboard == true){
+        currentProgram->goToSpringboard = false;
+        switchToProgram(0);
+    }
 }
 
 void BackboneCore::checkForProgramMail(){

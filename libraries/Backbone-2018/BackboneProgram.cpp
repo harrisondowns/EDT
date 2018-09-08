@@ -17,12 +17,13 @@ BackboneProgram::BackboneProgram(int defaultState){
 }
 
 void BackboneProgram::initProgram(){
+    currentScreen = screens[OS_STATE];
     pushToState(OS_STATE);
 }
 
 void BackboneProgram::run(int delta){
     currentScreen->run(delta);
-    checkForStateChange();
+    //checkForStateChange();
 }
 
 void BackboneProgram::addScreen(BackboneScreen *bs){
@@ -53,10 +54,16 @@ void BackboneProgram::pushToState(int state){
 
 void BackboneProgram::popState(int rip){
     clear_buttons();
-    currentScreen = stack.back();
-    currentScreen->init();
-    currentScreen->draw();
-    stack.pop_back();
+    if (stack.size() > 1){
+        currentScreen = stack.back();
+        currentScreen->init();
+        currentScreen->draw();
+        stack.pop_back();
+    }
+    else{
+        stack.pop_back();
+        goToSpringboard = true;
+    }
 }
 
 void BackboneProgram::sendMailOut(char *mail, int32_t size){
