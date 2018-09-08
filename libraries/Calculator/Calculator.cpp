@@ -198,9 +198,9 @@ void drawGraph(){
 
       // scale it: divide by maxMax, multiply by w / 2, h / 2 (for x, y), and that nmis the shift from the screen center
     int x1 = (xmax / maxMax) * (w / 2) + w / 2;
-    int y1 = (ymax / maxMax) * (h / 2) + h / 2;
+    int y1 = -(ymax / maxMax) * (h / 2) + h / 2;
     int x2 = (xmin / maxMax) * (w / 2) + w / 2;
-    int y2 = (ymin / maxMax) * (h / 2) + h / 2;
+    int y2 = -(ymin / maxMax) * (h / 2) + h / 2;
 
     Serial.println("printing x1 y1 x2 y2");
     Serial.println(x1);
@@ -208,7 +208,7 @@ void drawGraph(){
     Serial.println(x2);
     Serial.println(y2);
     
-    drawLine(-x2, -y2, -x1, -y1, BLACK); // negate because of weird flippy doo da
+    drawLine(x2, y2, x1, y1, BLACK);
     
   } else {
     drawText("Please set       both slope       and intercept", 3, 40, RED, 3);
