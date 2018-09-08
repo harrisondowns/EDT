@@ -7,5 +7,6 @@
 
 BackboneScreen getKeyboard(int);
 void numDraw();
+void KeyboardRun(int);
 
 #endif
