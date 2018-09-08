@@ -140,8 +140,9 @@ void fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h,
 }
 
 void clear_buttons() {
-  for (unsigned i = 0; i < button_vector.size(); i++) {
+  for (int i = button_vector.size() - 1; i >= 0; i--) {
     button_delete(i);
+    button_vector.pop_back();
   }
 }
 

@@ -8,6 +8,7 @@
 
 #include "BackboneProgram.h"
 #include "Arduino.h"
+#include "graphics.h"
 
 
 
@@ -41,9 +42,11 @@ void BackboneProgram::checkForStateChange(){
 }
 
 void BackboneProgram::pushToState(int state){
+    clear_buttons();
     stack.push_back(currentScreen);
     
     currentScreen = screens[state];
+
     currentScreen->init();
     currentScreen->draw();
 }
