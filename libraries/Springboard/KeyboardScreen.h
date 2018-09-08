@@ -6,7 +6,7 @@
 
 #include <BackboneScreen.h>
 
-BackboneScreen getKeyboard(int);
+BackboneScreen *getKeyboard(int);
 void numDraw();
 void KeyboardRun(int);
 boolean check_flag();
