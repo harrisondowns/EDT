@@ -61,7 +61,7 @@ void BackboneProgram::sendMailOut(char *mail, int32_t size){
         bufferSize = size;
     }
     else{
-        freeVar(mail, size);
+        free(mail);
     }
 }
 

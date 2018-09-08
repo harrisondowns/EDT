@@ -6,7 +6,6 @@
 //  Copyright © 2018 Harrison Downs. All rights reserved.
 //
 
-#include "Memory.h"
 #include "Core.h"
 #include "Arduino.h"
 #include "Mail.h"
@@ -17,8 +16,6 @@ BackboneCore::BackboneCore(){
 }
 
 void BackboneCore::initBackbone(){
-    memInit();
-
     switchToProgram(0);
 }
 
@@ -54,7 +51,7 @@ void BackboneCore::sendMail(char *message, int32_t size){
         outgoingMailSize.push_back(size);
     }
     else{
-        freeVar(message, size);
+        free(message);
     }
 }
 
@@ -68,7 +65,7 @@ String BackboneCore::getMail(){
     outgoingMail.pop_back();
     outgoingMailSize.pop_back();
     String s = String(m);
-    freeVar(m, size);
+    free(m);
     Serial.print("S after free is ");
     Serial.println(s);
     return s;
