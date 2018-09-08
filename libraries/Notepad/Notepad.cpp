@@ -10,6 +10,7 @@
 #include "NotepadGlobals.h"
 #include "graphics.h"
 #include "NotepadDraw.h"
+#include "Mail.h"
 //#include "Mail.h"
 
 void initNotepadHome(){
@@ -18,6 +19,9 @@ void initNotepadHome(){
 
 void callNote(int id){
 	pushNote = id;
+	if (pushNote == numNotes){
+		numNotes++;
+	}
 	notepadProgram->pushToState(NOTEPAD_DRAW);
 }
 
@@ -31,7 +35,16 @@ void drawNotepadHome(){
 }
 
 void runNotepadHome(int delta){
-	
+	int mailSize = checkForMessage(2);
+    
+    if (mailSize > 0){
+        Serial.println("GOT MAIL");
+        char buffer[mailSize + 1];
+        readMail(1, buffer, mailSize);
+        buffer[mailSize] = 0;
+        Serial.print("receivedMail: ");
+        Serial.println(buffer);
+    }
 }
 
 

@@ -57,3 +57,24 @@ void readMail(byte progNum, char *buffer, int size){
 	}
 }
 
+void writeToFile(String fn, String message){
+	File f = SPIFFS.open(String("/") + fn, "w");
+	//Serial.println("MESSAGE IS " + message);
+	f.print(message);
+	f.print("\n");
+	f.close();
+}
+
+String readFile(String fn){
+	File f = SPIFFS.open(String("/") + fn, "r");
+	Serial.print("f size is ");
+	Serial.println(f.size());
+	String s = f.readStringUntil('0');
+	f.close();
+	return s;
+}
+
+bool fileExists(String fn){
+	return SPIFFS.exists(String("/") + fn);
+}
+

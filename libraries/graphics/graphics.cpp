@@ -63,7 +63,7 @@ int add_button(int x, int y, int width, int height, int radius, int parameter, i
 
 void check_press(int x, int y) {
   if (touchDown == false){
-    for (int i = 0; i < button_vector.size(); i++) {
+    for (int i = 0; i < button_vector.size(); ++i) {
       if ((x > button_vector[i]->x and x < (button_vector[i]->x + button_vector[i]->width)) and (y > button_vector[i]->y and y < (button_vector[i]->y + button_vector[i]->height))) {
         button_vector[i]->func(button_vector[i]->parameter);
         touchDown = true;
