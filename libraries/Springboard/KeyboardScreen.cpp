@@ -8,7 +8,8 @@ const int MaxLength = 17;
 int used = 0;
 char *keys = "1234567890qwertyuiopasdfghjkl;zxcvbnm,./ ";
 char *nums = "1234567890";
-char input[MaxLength+1];
+char input[MaxLength + 1];
+boolean flagged = false;
 
 void add_num(int index) {
         //Serial.println(index);
@@ -32,8 +33,7 @@ void alphaDraw() {
 }
 
 void finish(int param) {
-        (void) param;
-
+        flagged = true;
 }
 
 void numDraw() {
@@ -85,6 +85,10 @@ void KeyboardRun(int delta) {
         delay(250);
 
 
+}
+
+char *get_val() {
+        return input;
 }
 
 BackboneScreen *getKeyboard(int type){
