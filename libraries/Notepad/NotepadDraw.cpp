@@ -25,24 +25,25 @@ int conY = 45;
 int currentColor = 0;
 
 void swapColor(int x){
-    Serial.print("currentColor is START ");
-    Serial.println(currentColor);
     if (x != currentColor){
-        Serial.print("currentColor is A ");
-        Serial.println(currentColor);
         int currentColorX = currentColor % 2;
         int currentColorY = currentColor / 2;
         drawRect(currentColorX * buttSize + 1 + conX, currentColorY * buttSize + conY, buttSize + 1, buttSize + 1, WHITE);
-        Serial.print("currentColor is B ");
-        Serial.println(currentColor);
         currentColor = x;
-        Serial.print("currentColor is C ");
-        Serial.println(currentColor);
         currentColorX = currentColor % 2;
         currentColorY = currentColor / 2;
         drawRect(currentColorX * buttSize + 1 + conX, currentColorY * buttSize + conY, buttSize + 1, buttSize + 1, RED);
     }
 }
+
+void notepadPop(int x){
+    notepadProgram->popState(0);
+}
+void notepadShare(int a){
+
+}
+
+
 
 void drawNotepadDraw(){
     
@@ -53,8 +54,6 @@ void drawNotepadDraw(){
 
     drawLine(0 + conX, 0 + conY, 0 + conX, buttSize * 4 + conY, WHITE); // left line
     drawLine(buttSize * 2 + 1 + conX, 0 + conY, buttSize * 2 + 1 + conX, buttSize * 4 + conY, WHITE); // right line
-    //drawLine(0, 0, buttSize * 2 + 1, buttSize * 8, WHITE);
-
     
 
     drawLine(0 + conX, 0 + conY, buttSize * 2 + 1 + conX, 0 + conY, WHITE); // top line
@@ -73,12 +72,15 @@ void drawNotepadDraw(){
         drawLine(0 + conX, y * buttSize + conY, buttSize * 2 + 1 + conX, y * buttSize + conY, WHITE);
     }
     drawLine(buttSize + 1 + conX, 0 + conY, buttSize + 1 + conX, buttSize * 4 + conY, WHITE); // middle line
-    Serial.print("currentColor is Q ");
-    Serial.println(currentColor);
     swapColor(1);
 
-}
+    int n = add_button(10, 2, buttSize * 2 + (buttSize / 2), buttSize, 2, 0, 2, "BACK", WHITE, BLUE, notepadPop);
+    draw_button(n);
 
+    n = add_button(10, 200, buttSize * 2 + (buttSize / 2), buttSize, 2, 0, 2, "SHARE", WHITE, BLUE, notepadShare);
+    draw_button(n);
+
+}
 
 
 void runNotepadDraw(int delta){

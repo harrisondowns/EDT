@@ -63,7 +63,7 @@ void sendMessage(){
   if (core->hasMail()){
       String msg = core->getMail();
       network.sendBroadcast(msg);
-      Serial.printf("Sending message: %s\n", msg.c_str());
+  //    Serial.printf("Sending message: %s\n", msg.c_str());
   }
   taskSendMessage.setInterval( TASK_SECOND * 5);
 }

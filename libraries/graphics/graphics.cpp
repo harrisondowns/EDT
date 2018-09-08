@@ -42,7 +42,7 @@ void graphics_begin() {
   ts.setRotation(3);
 }
 
-int add_button(int x, int y, int height, int width, int radius, int parameter, int text_size, char *text, uint16_t text_color, uint16_t background_color, void (*func)(int)) {
+int add_button(int x, int y, int width, int height, int radius, int parameter, int text_size, char *text, uint16_t text_color, uint16_t background_color, void (*func)(int)) {
   button *new_button =(button *) malloc(sizeof(button));
   new_button->x = x;
   new_button->y = y;
