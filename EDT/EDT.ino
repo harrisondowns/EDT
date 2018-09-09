@@ -1,5 +1,4 @@
 
-
 /*
  ESP8266 Blink by Simon Peter
  Blink the blue LED on the ESP-01 module
@@ -21,7 +20,6 @@
 #include <Calculator.h>
 #include <Clicker.h>
 #include <FlashCards.h>
-#include <Notepad.h>
 
 #define DEBUG_DELAY 0
 
@@ -67,6 +65,7 @@ void receivedCallback(uint32_t from, String &msg){
 
 void newConnectionCallback( bool adopt ) {
   Serial.printf("New Connection, adopt=%d\n", adopt);
+  delay(DEBUG_DELAY);
 }
 
 void sendMessage(){
