@@ -11,6 +11,10 @@
 #include <graphics.h>
 #include <KeyboardScreen.h>
 
+void submitResponse(int selection) {
+  
+}
+
 void quitClicker(int screen) {
   clickerProgram->popState(screen);
 }
@@ -26,50 +30,50 @@ void drawClicker(){
     add_button(w / 2 - 20, //x
 	       90, //y
 	       40,//w
-	       25,//h
+	       30,//h
 	       0, //r
 	       0, //screen
 	       3, //textSize
-	       "back", //text
+	       "A", //text
 	       BLACK, //textColor
-	       PINK, //ScreenColor
-	       quitClicker //changeScreen
+	       PURPLE, //ScreenColor
+	       submitResponse //changeScreen
 	       );
-    add_button(3, //x
-	       3, //y
-	       50,//w
-	       19,//h
+    add_button(w / 2 - 20, //x
+	       125, //y
+	       40,//w
+	       30,//h
 	       0, //r
-	       0, //screen
-	       2, //textSize
-	       "back", //text
+	       1, //screen
+	       3, //textSize
+	       "B", //text
 	       BLACK, //textColor
-	       PINK, //ScreenColor
-	       quitClicker //changeScreen
+	       PURPLE, //ScreenColor
+	       submitResponse //changeScreen
 	       );
-    add_button(3, //x
-	       3, //y
-	       50,//w
-	       19,//h
+    add_button(w / 2 - 20, //x
+	       160, //y
+	       40,//w
+	       30,//h
 	       0, //r
-	       0, //screen
-	       2, //textSize
-	       "back", //text
+	       2, //screen
+	       3, //textSize
+	       "C", //text
 	       BLACK, //textColor
-	       PINK, //ScreenColor
-	       quitClicker //changeScreen
+	       PURPLE, //ScreenColor
+	       submitResponse //changeScreen
 	       );
-    add_button(3, //x
-	       3, //y
-	       50,//w
-	       19,//h
+    add_button(w / 2 - 20, //x
+	       195, //y
+	       40,//w
+	       30,//h
 	       0, //r
-	       0, //screen
-	       2, //textSize
-	       "back", //text
+	       3, //screen
+	       3, //textSize
+	       "D", //text
 	       BLACK, //textColor
-	       PINK, //ScreenColor
-	       quitClicker //changeScreen
+	       PURPLE, //ScreenColor
+	       submitResponse //changeScreen
 	       );
     add_button(3, //x
 	       3, //y
