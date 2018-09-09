@@ -52,9 +52,6 @@ void clearNotes(int rip){
 
 void refreshNote(int rip){
 	String l = getStudent();
-	Serial.println("");
-	Serial.println(l);
-	Serial.println("");
 
 	Serial.println("writing to Notepad" + String(numNotes));
 	writeToFile("Notepad" + String(numNotes), l);

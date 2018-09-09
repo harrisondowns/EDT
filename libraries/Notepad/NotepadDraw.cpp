@@ -17,7 +17,7 @@ void initNotepadDraw(){
 
 }
 
-
+int shareButtonID = 0;
 
 int buttSize = 28;
 
@@ -112,6 +112,13 @@ void notepadShare(int a){
     //setup_wifi();
     postToStudent(String((char*)pixelBuffer));
     Serial.println("DONE POSTING TO STUDENT");
+
+    fillRect(11, 171, buttSize * 2 + buttSize / 2 - 1, buttSize * 2 - 1, BLUE);
+    drawLine(30, 200, 40, 210, WHITE); //checkMark
+    drawLine(40, 210, 60, 180, WHITE);
+    //10, 170, buttSize * 2 + (buttSize / 2), buttSize * 2
+
+
  /*   int sizeMessage = 800;
     char *message = (char*)malloc(sizeMessage);
     message[0] = 'h';
@@ -191,8 +198,8 @@ void drawNotepadDraw(){
     int n = add_button(10, 2, buttSize * 2 + (buttSize / 2), buttSize, 2, 0, 2, "BACK", WHITE, BLUE, notepadPop);
     draw_button(n);
 
-    n = add_button(10, 170, buttSize * 2 + (buttSize / 2), buttSize * 2, 2, 0, 2, "SHARE", WHITE, BLUE, notepadShare);
-    draw_button(n);
+    shareButtonID = add_button(10, 170, buttSize * 2 + (buttSize / 2), buttSize * 2, 2, 0, 2, "SHARE", WHITE, BLUE, notepadShare);
+    draw_button(shareButtonID);
 
 }
 
