@@ -1,5 +1,4 @@
 
-
 /*
  ESP8266 Blink by Simon Peter
  Blink the blue LED on the ESP-01 module
@@ -13,16 +12,20 @@
 
 #include <Core.h>
 #include <Springboard.h>
+#include <Notepad.h>
+#include <Networking.h>
 #include <painlessMesh.h>
 #include <FS.h>
 #include <graphics.h>
 #include <Calculator.h>
+#include <Clicker.h>
 #include <FlashCards.h>
-#include <Notepad.h>
+
+#define DEBUG_DELAY 0
 
 Scheduler userScheduler;
 BackboneCore *core = new BackboneCore();
-painlessMesh network;
+//painlessMesh network;
 int lastTime = 0;
 void sendMessage();
 void runBackboneCall();
@@ -32,20 +35,19 @@ Task runBackbone(TASK_SECOND * 0, TASK_FOREVER, &runBackboneCall);
 void setup() {
   SPIFFS.begin();
   graphics_begin();
+  setup_wifi();
+  //postToStudent("hey jimmy smells");
   setCore(core);
-  network.init("ESP MESH", "notwiththatattitude", 5555);
+ /* network.init("ESP MESH", "notwiththatattitude", 5555);
   network.onReceive (&receivedCallback);
-  network.onNewConnection (&newConnectionCallback);
+  network.onNewConnection (&newConnectionCallback);*/
   Serial.begin(9600); 
   
   core->addProgram(makeSpringboard());
   core->addProgram(makeCalculator());
   core->addProgram(makeNotepad());
-<<<<<<< Updated upstream
-  core->addProgram(makeClicker());
-=======
   core->addProgram(makeFlashCards());
->>>>>>> Stashed changes
+  core->addProgram(makeClicker());
   core->initBackbone();
 
   userScheduler.addTask(taskSendMessage);
@@ -63,16 +65,22 @@ void receivedCallback(uint32_t from, String &msg){
 
 void newConnectionCallback( bool adopt ) {
   Serial.printf("New Connection, adopt=%d\n", adopt);
+  delay(DEBUG_DELAY);
 }
 
 void sendMessage(){
-  Serial.println("Send message!");
-  if (core->hasMail()){
+//  Serial.println("Send message!");
+ /* if (core->hasMail()){
+      Serial.println("in has mail");
       String msg = core->getMail();
-      network.sendBroadcast(msg);
-      Serial.printf("Sending message: %s\n", msg.c_str());
+      Serial.println("got the mail");
+      delay(DEBUG_DELAY);
+    //  network.sendBroadcast(msg);
+    //  Serial.printf("Sending message: %s\n", msg.c_str());
+      delay(DEBUG_DELAY);
   }
-  taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));
+  delay(DEBUG_DELAY);
+  taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));*/
 }
 
 void runBackboneCall(){
@@ -86,5 +94,5 @@ void runBackboneCall(){
 void loop() {
 
   userScheduler.execute(); // it will run mesh scheduler as well
-  network.update();
+ // network.update();
 }
