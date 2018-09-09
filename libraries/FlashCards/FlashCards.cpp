@@ -11,12 +11,14 @@
 #include "BackboneScreen.h"
 #include <graphics.h>
 #include <KeyboardScreen.h>
+#include "Mail.h"
 
 #define NEW_SET 1
 #define KEYBOARD 2
 
 char *title;
 char *description;
+int cardNumber;
 boolean titleSet;
 boolean descriptionSet;
 boolean settingTitle;
@@ -27,7 +29,8 @@ void changeToScreen(int program) {
 
 void initNewSet() {
 	title = "    ";
-	description = "    ";
+	description = " ";
+	cardNumber = 0;
 	titleSet = false;
 	descriptionSet = false;
 	settingTitle = false;
@@ -35,7 +38,6 @@ void initNewSet() {
 }
 
 void setTitle(int screen) {
-	titleSet = true;
 	settingTitle = true;
 	changeToScreen(screen);
 }
@@ -46,28 +48,48 @@ void setDescription(int screen) {
 	changeToScreen(screen);
 }
 
-void updataeText() {
+void updateText() {
 	if(settingTitle) {
-		title = get_val();
+		titleSet = true;
+		strcpy(title, get_val());
 	}
 	else {
-		description = get_val();
+		descriptionSet = true;
+		strcpy(description, get_val());
 	}
 }
 
+void saveAndChange(int rip) {
+	//writeToFile("FlashCards" + String(cardNumber), strcat(title, description));
+	title = "   ";
+	description = " ";
+	cardNumber++;
+	titleSet = false;
+	descriptionSet = false;
+	settingTitle = false;
+	fillRect(55, 78, 250, 20, PURPLE);
+	fillRect(55, 180, 20, 200, PURPLE);
+}
+
 void drawNewSet() {
-	updataeText();
+	updateText();
 	fillScreen(PURPLE);
 	add_button(50, 10, 80, 60, 0, KEYBOARD, 2, "Title:", WHITE, BLACK, setTitle);
 	if(titleSet) {
-		drawText(title, 55, 87, WHITE, 3);
+		drawText(title, 55, 78, WHITE, 3);
 	}
+	//else {
+	//	fillRect(55, 78, 250, 20, PURPLE);
+	//}
 	add_button(50, 110, 160, 60, 0, KEYBOARD, 2, "Description:", WHITE, BLACK, setDescription);
 	if(descriptionSet){
-		drawText(title, 55, 195, WHITE, 1);
+		drawText(description, 55, 180, WHITE, 1);
 	}
+	//else {
+	//	fillRect(55, 180, 20, 200, PURPLE);
+	//}
 
-
+	add_button(5, 180, 50, 50, 0, 0, 1, "Next", WHITE, BLACK, saveAndChange);
 
 	draw_all_buttons();
 }

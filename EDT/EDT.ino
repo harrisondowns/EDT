@@ -1,4 +1,5 @@
 
+
 /*
  ESP8266 Blink by Simon Peter
  Blink the blue LED on the ESP-01 module
@@ -12,13 +13,12 @@
 
 #include <Core.h>
 #include <Springboard.h>
-#include <Notepad.h>
 #include <painlessMesh.h>
 #include <FS.h>
 #include <graphics.h>
 #include <Calculator.h>
-
-#define DEBUG_DELAY 0
+#include <FlashCards.h>
+#include <Notepad.h>
 
 Scheduler userScheduler;
 BackboneCore *core = new BackboneCore();
@@ -41,7 +41,11 @@ void setup() {
   core->addProgram(makeSpringboard());
   core->addProgram(makeCalculator());
   core->addProgram(makeNotepad());
+<<<<<<< Updated upstream
   core->addProgram(makeClicker());
+=======
+  core->addProgram(makeFlashCards());
+>>>>>>> Stashed changes
   core->initBackbone();
 
   userScheduler.addTask(taskSendMessage);
@@ -59,21 +63,15 @@ void receivedCallback(uint32_t from, String &msg){
 
 void newConnectionCallback( bool adopt ) {
   Serial.printf("New Connection, adopt=%d\n", adopt);
-  delay(DEBUG_DELAY);
 }
 
 void sendMessage(){
-//  Serial.println("Send message!");
+  Serial.println("Send message!");
   if (core->hasMail()){
-      Serial.println("in has mail");
       String msg = core->getMail();
-      Serial.println("got the mail");
-      delay(DEBUG_DELAY);
       network.sendBroadcast(msg);
-    //  Serial.printf("Sending message: %s\n", msg.c_str());
-      delay(DEBUG_DELAY);
+      Serial.printf("Sending message: %s\n", msg.c_str());
   }
-  delay(DEBUG_DELAY);
   taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));
 }
 
