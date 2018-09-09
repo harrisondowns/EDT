@@ -47,51 +47,51 @@ void drawClicker(){
     drawText("Clicker", 70, 10, BLACK, 4);
     fillRect(70, 50, 210, 35, BLACK);
     int w = width();
-    add_button(w / 2 - 20, //x
+    add_button(w / 4 - 50, //x
 	       90, //y
-	       40,//w
-	       30,//h
+	       100,//w
+	       67,//h
 	       0, //r
 	       0, //screen
-	       3, //textSize
+	       4, //textSize
 	       "A", //text
-	       BLACK, //textColor
+	       WHITE, //textColor
 	       PURPLE, //ScreenColor
 	       submitResponse //changeScreen
 	       );
-    add_button(w / 2 - 20, //x
-	       125, //y
-	       40,//w
-	       30,//h
+    add_button(w * 3 / 4 - 50, //x
+	       90, //y
+	       100,//w
+	       67,//h
 	       0, //r
 	       1, //screen
-	       3, //textSize
+	       4, //textSize
 	       "B", //text
-	       BLACK, //textColor
+	       WHITE, //textColor
 	       PURPLE, //ScreenColor
 	       submitResponse //changeScreen
 	       );
-    add_button(w / 2 - 20, //x
-	       160, //y
-	       40,//w
-	       30,//h
+    add_button(w / 4 - 50, //x
+	       168, //y
+	       100,//w
+	       67,//h
 	       0, //r
 	       2, //screen
-	       3, //textSize
+	       4, //textSize
 	       "C", //text
-	       BLACK, //textColor
+	       WHITE, //textColor
 	       PURPLE, //ScreenColor
 	       submitResponse //changeScreen
 	       );
-    add_button(w / 2 - 20, //x
-	       195, //y
-	       40,//w
-	       30,//h
+    add_button(w * 3 / 4 - 50, //x
+	       168, //y
+	       100,//w
+	       67,//h
 	       0, //r
 	       3, //screen
-	       3, //textSize
+	       4, //textSize
 	       "D", //text
-	       BLACK, //textColor
+	       WHITE, //textColor
 	       PURPLE, //ScreenColor
 	       submitResponse //changeScreen
 	       );
