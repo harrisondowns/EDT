@@ -15,12 +15,20 @@
 
 void initNotepadHome(){
 	Serial.println("Home reached");
+	if (fileExists("NotepadCount")){
+		numNotes = readFile("NotepadCount").toInt();
+	}
+	else{
+		writeToFile("NotepadCount", "1");
+		numNotes = 1;
+	}
 }
 
 void callNote(int id){
 	pushNote = id;
 	if (pushNote == numNotes){
 		numNotes++;
+		writeToFile("NotepadCount", String(numNotes));
 	}
 	notepadProgram->pushToState(NOTEPAD_DRAW);
 }
@@ -32,14 +40,26 @@ void popToSb(int rip){
 void drawNotepadHome(){
     fillScreen(LIGHTGREY);
 
-    int n = add_button(10, 10, 60, 60, 2, 0, 2, "BACK", WHITE, BLACK, popToSb);
+    drawText("Notes", 60, 10, BLACK, 8);
+
+    int n = add_button(10, 10, 40, 40, 2, 0, 2, "BACK", WHITE, BLACK, popToSb);
     draw_button(n);
 
     for (int i = 0; i < numNotes; i++){
-        n = add_button(20 + i * 70, 100, 60, 60, 2, i + 1, 2, "", WHITE, BLACK, callNote);
+    	int defX = 10 + (i % 6) * 50;
+    	int defY = 100 + (i / 6) * 70;
+        n = add_button(defX, defY, 40, 40, 2, i + 1, 2, "", WHITE, BLACK, callNote);
         draw_button(n);
+        if (numNotes != i + 1){
+        	String r = readFile("Notepad" + String(i + 1));
+        	for (int y = 0; y < 40; y++){
+        		for (int x = 0; x < 40; x++){
+        			fillRect(defX + x, defY + y, 1, 1, colors[r[y * 40 + x] - 64]);
+        		}
+    		}
+    	}
     }
-    drawText("Notes", 60, 10, BLACK, 8);
+    
 }
 
 void runNotepadHome(int delta){

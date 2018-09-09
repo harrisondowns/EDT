@@ -8,7 +8,6 @@
 
 #include "NotepadDraw.h"
 #include "NotepadGlobals.h"
-#include "graphics.h"
 #include "Mail.h"
 #include "Arduino.h"
 //#include "Mail.h"
@@ -17,7 +16,7 @@ void initNotepadDraw(){
 
 }
 
-uint16_t colors[8] = {WHITE, BLACK, DARKGREY, RED, BLUE, GREEN, ORANGE, PINK};
+
 
 int buttSize = 28;
 
@@ -53,17 +52,75 @@ void notepadShare(int a){
         }
     }*/
 
+
+    byte currentColor = pixelBuffer[0];
+    byte currentCount = 1;
+
+    uint16_t totalBytes = 2;
+
+    for (int i = 1; i < 1600; i++){
+        if (pixelBuffer[i] != currentColor || currentCount > 255){
+            totalBytes += 2;
+            currentCount = 1;
+            currentColor = pixelBuffer[i];
+        } else{
+            currentCount++;
+        }
+    }
+    Serial.print("meh compression is bytes = ");
+    Serial.println(totalBytes);
+   /* for (int i = 0; i < 1600; i++){
+       // Serial.print(pixelBuffer[i]);
+        if (i % 40 == 0){
+           // Serial.println("|");
+            yield();
+        }
+    }*/
+
+/*
+    char compressed[totalBytes + 1];
+
+    currentColor = pixelBuffer[0];
+    currentCount = 1;
+
+    totalBytes = 2;
+
+    for (int i = 1; i < 1600; i++){
+        if (pixelBuffer[i] != currentColor || currentCount > 255){
+            compressed[totalBytes] = currentColor + 1;
+            compressed[totalBytes + 1] = currentCount;
+            totalBytes += 2;
+
+            currentCount = 1;
+            currentColor = pixelBuffer[i];
+        } else{
+            currentCount++;
+        }
+    }
+
+    
+    compressed[totalBytes] = 0;
+
+    Serial.print("COMPRESSED IS : ");
+    Serial.println(compressed);*/
+
     writeToFile("Notepad" + String(pushNote), String((char*)pixelBuffer));
     yield();
-    char *message = (char*)malloc(6);
+ /*   int sizeMessage = 800;
+    char *message = (char*)malloc(sizeMessage);
     message[0] = 'h';
     message[1] = 'u';
     message[2] = 'l';
     message[3] = 'l';
     message[4] = 'o';
-    message[5] = 0;
-    notepadProgram->sendMailOut(message, 6);
+    for (int i = 5; i < sizeMessage - 1; i++){
+        message[i] = 'o';
+    }
+    message[sizeMessage - 1] = 0;
+    notepadProgram->sendMailOut(message, sizeMessage);*/
 }
+
+
 
 void drawNotepadDraw(){
     
@@ -127,7 +184,7 @@ void drawNotepadDraw(){
     int n = add_button(10, 2, buttSize * 2 + (buttSize / 2), buttSize, 2, 0, 2, "BACK", WHITE, BLUE, notepadPop);
     draw_button(n);
 
-    n = add_button(10, 200, buttSize * 2 + (buttSize / 2), buttSize, 2, 0, 2, "SHARE", WHITE, BLUE, notepadShare);
+    n = add_button(10, 170, buttSize * 2 + (buttSize / 2), buttSize * 2, 2, 0, 2, "SHARE", WHITE, BLUE, notepadShare);
     draw_button(n);
 
 }
