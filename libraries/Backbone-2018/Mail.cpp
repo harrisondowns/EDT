@@ -12,8 +12,8 @@
 
 #define MAX_MAIL_SIZE 0
 
-int mailCount[1] = {0};
-int readCount[1] = {0};
+int mailCount[5] = {0, 0, 0, 0, 0};
+int readCount[5] = {0, 0, 0, 0, 0};
 
 void newMessage(String message){
 	if (message.length() > MAX_MAIL_SIZE){

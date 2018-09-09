@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "BackboneProgram.h"
+#include "graphics.h"
 
 void initNotepadDraw();
 
