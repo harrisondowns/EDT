@@ -42,7 +42,7 @@ void drawNotepadHome(){
 
     drawText("Notes", 60, 10, BLACK, 8);
 
-    int n = add_button(10, 10, 40, 40, 2, 0, 2, "BACK", WHITE, BLACK, popToSb);
+    int n = add_button(10, 10, 40, 40, 2, 0, 1, "BACK", WHITE, BLACK, popToSb);
     draw_button(n);
 
     for (int i = 0; i < numNotes; i++){
