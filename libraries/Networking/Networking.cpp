@@ -14,7 +14,11 @@ const char* password = "eeejjjmmm";
 
 const char* host = "cryptic-waters-95987.herokuapp.com";
 
-#define ADMIN false
+#define ADMIN true
+
+boolean isAdmin() {
+  return ADMIN;
+}
 
 void setup_wifi() {
   // We start by connecting to a WiFi network

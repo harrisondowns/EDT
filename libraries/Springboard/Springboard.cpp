@@ -94,6 +94,11 @@ void drawSpringboard(){
     drawText("C", 240, 130, BLACK, 3);
     drawText("D", 270, 130, BLACK, 3);
 
+    if (isAdmin()) {
+      drawText("Teacher Edition", 3, height() - 15, WHITE, 2);
+    } else {
+      drawText("Student Edition", 3, height() - 15, WHITE, 2);
+    }
     yield();
     
     drawText((char *)getTime().c_str(), width() - 100, 3, BLACK, 3);
