@@ -150,6 +150,41 @@ void postAnswer(String dataS){
 	}
 }
 
+void submitAnswer(String dataS){
+	WiFiClient client;
+  	const int httpPort = 80;
+  	if (!client.connect(host, httpPort)) {
+   		Serial.println("connection failed");
+    	return;
+  	}
+	Serial.println("submitting Answer");
+	  // We now create a URI for the request
+	String url = "/submitAnswer";
+
+	String data = "answer=" + dataS;
+	  // This will send the request to the server
+	 // client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+	   //            "Host: " + host + "\r\n" + 
+	    //           "Connection: close\r\n\r\n");
+	client.println("POST /submitAnswer HTTP/1.1");
+    client.println(String("Host: ") + host);
+    client.println("Accept: */*");
+    client.println("Content-Type: application/x-www-form-urlencoded");
+    client.print("Content-Length: ");
+    client.println(data.length());
+    client.println();
+    client.print(data);
+	unsigned long timeout = millis();
+	while (client.available() == 0) {
+	    if (millis() - timeout > 5000) {
+	      	Serial.println(">>> Client Timeout !");
+	      	client.stop();
+	      	return;
+	    }
+	}
+}
+
+
 String getAnswer(){
 	WiFiClient client;
   	const int httpPort = 80;
@@ -179,11 +214,42 @@ String getAnswer(){
   	return line;
 }
 
+String getAnswers(){
+	WiFiClient client;
+  	const int httpPort = 80;
+  	if (!client.connect(host, httpPort)) {
+   		Serial.println("connection failed");
+    	return "";
+  	}
+  
+	String url = "/getAnswers";
+	client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+	              "Host: " + host + "\r\n" + 
+	               "Connection: close\r\n\r\n");
+	
+	unsigned long timeout = millis();
+  while (client.available() == 0) {
+    if (millis() - timeout > 5000) {
+    //efe  Serial.println(">>> Client Timeout !");
+      client.stop();
+      return "";
+    }
+  }
+  String line;
+  // Read all the lines of the reply from server and print them to Serial
+  while(client.available()){
+    line = client.readStringUntil('\n');
+  }
+  	return line;
+}
+
+
 char *clickerServer(String choice) {
   if (ADMIN) {
     postAnswer(choice);
     return "set!";
   } else {
+    submitAnswer(choice);
     String a = getAnswer();
     if (a == choice) {
       return "Correct!";
