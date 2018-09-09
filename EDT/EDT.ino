@@ -41,6 +41,7 @@ void setup() {
   core->addProgram(makeSpringboard());
   core->addProgram(makeCalculator());
   core->addProgram(makeNotepad());
+  core->addProgram(makeClicker());
   core->initBackbone();
 
   userScheduler.addTask(taskSendMessage);
