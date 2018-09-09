@@ -31,8 +31,12 @@ void BackboneCore::runBackbone(int delta){
 }
 
 void BackboneCore::checkForProgramMail(){
+  int32_t size1 = currentProgram->pollForMail();
+  yield();
     if (currentProgram->pollForMail() > 0){
+      Serial.println("polled > 0");
         int32_t size = currentProgram->pollForMail();
+	Serial.println(size);
         sendMail(currentProgram->getMail(), size);
     }
 }
@@ -52,7 +56,9 @@ void BackboneCore::receivedMail(String message){
 }
 
 void BackboneCore::sendMail(char *message, int32_t size){
+  Serial.println("in sendMail Function");
     if (outgoingMail.size() < 100){
+      Serial.println("pushbac");
         outgoingMail.push_back(message);
         outgoingMailSize.push_back(size);
     }
@@ -62,10 +68,14 @@ void BackboneCore::sendMail(char *message, int32_t size){
 }
 
 bool BackboneCore::hasMail(){
+  Serial.println(outgoingMail.size());
     return outgoingMail.size() > 0;
 }
 
 String BackboneCore::getMail(){
+    if (outgoingMail.size() == 0) {
+      return "";
+    }
     char *m = outgoingMail.back();
     Serial.println(m);
     int32_t size = outgoingMailSize.back();

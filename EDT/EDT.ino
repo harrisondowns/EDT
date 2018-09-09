@@ -62,7 +62,7 @@ void newConnectionCallback( bool adopt ) {
 }
 
 void sendMessage(){
-  Serial.println("Send message!");
+//  Serial.println("Send message!");
   if (core->hasMail()){
       Serial.println("in has mail");
       String msg = core->getMail();

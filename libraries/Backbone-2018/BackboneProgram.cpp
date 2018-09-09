@@ -66,10 +66,16 @@ void BackboneProgram::popState(int rip){
     }
 }
 
+boolean validMail = false;
+
 void BackboneProgram::sendMailOut(char *mail, int32_t size){
+  Serial.println("sendMailOut");
+  Serial.println(mail);
+  Serial.println(size);
     if (bufferSize == 0){
         buffer = mail;
         bufferSize = size;
+	validMail = true;
     }
     else{
         free(mail);
@@ -77,11 +83,17 @@ void BackboneProgram::sendMailOut(char *mail, int32_t size){
 }
 
 int32_t BackboneProgram::pollForMail(){
+  if (validMail) {
     return bufferSize;
+  }
+  return 0;
 }
 
 char* BackboneProgram::getMail(){
     bufferSize = 0;
+    Serial.println("buffer is");
+    Serial.println(buffer);
+    validMail = false;
     return buffer;
 }
 
