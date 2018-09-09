@@ -57,6 +57,10 @@ void readMail(byte progNum, char *buffer, int size){
 	}
 }
 
+bool deleteFile(String path){
+	return SPIFFS.remove(String("/") + path);
+}
+
 void writeToFile(String fn, String message){
 	File f = SPIFFS.open(String("/") + fn, "w");
 	//Serial.println("MESSAGE IS " + message);

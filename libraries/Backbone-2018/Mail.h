@@ -22,5 +22,6 @@ void readMail(byte progNum, char *buffer, int size);
 void writeToFile(String fn, String message);
 String readFile(String fn);
 bool fileExists(String fn);
+bool deleteFile(String path);
 #endif /* Mail_hpp */
 

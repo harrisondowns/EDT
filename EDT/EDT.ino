@@ -13,6 +13,7 @@
 #include <Core.h>
 #include <Springboard.h>
 #include <Notepad.h>
+#include <Networking.h>
 #include <painlessMesh.h>
 #include <FS.h>
 #include <graphics.h>
@@ -24,7 +25,7 @@
 
 Scheduler userScheduler;
 BackboneCore *core = new BackboneCore();
-painlessMesh network;
+//painlessMesh network;
 int lastTime = 0;
 void sendMessage();
 void runBackboneCall();
@@ -34,10 +35,12 @@ Task runBackbone(TASK_SECOND * 0, TASK_FOREVER, &runBackboneCall);
 void setup() {
   SPIFFS.begin();
   graphics_begin();
+  setup_wifi();
+  //postToStudent("hey jimmy smells");
   setCore(core);
-  network.init("ESP MESH", "notwiththatattitude", 5555);
+ /* network.init("ESP MESH", "notwiththatattitude", 5555);
   network.onReceive (&receivedCallback);
-  network.onNewConnection (&newConnectionCallback);
+  network.onNewConnection (&newConnectionCallback);*/
   Serial.begin(9600); 
   
   core->addProgram(makeSpringboard());
@@ -67,17 +70,17 @@ void newConnectionCallback( bool adopt ) {
 
 void sendMessage(){
 //  Serial.println("Send message!");
-  if (core->hasMail()){
+ /* if (core->hasMail()){
       Serial.println("in has mail");
       String msg = core->getMail();
       Serial.println("got the mail");
       delay(DEBUG_DELAY);
-      network.sendBroadcast(msg);
+    //  network.sendBroadcast(msg);
     //  Serial.printf("Sending message: %s\n", msg.c_str());
       delay(DEBUG_DELAY);
   }
   delay(DEBUG_DELAY);
-  taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));
+  taskSendMessage.setInterval( random(TASK_SECOND * 1, TASK_SECOND * 5));*/
 }
 
 void runBackboneCall(){
@@ -91,5 +94,5 @@ void runBackboneCall(){
 void loop() {
 
   userScheduler.execute(); // it will run mesh scheduler as well
-  network.update();
+ // network.update();
 }

@@ -10,6 +10,7 @@
 #include "NotepadGlobals.h"
 #include "Mail.h"
 #include "Arduino.h"
+#include "Networking.h"
 //#include "Mail.h"
 
 void initNotepadDraw(){
@@ -41,6 +42,8 @@ void swapColor(int x){
 }
 
 void notepadPop(int x){
+    writeToFile("Notepad" + String(pushNote), String((char*)pixelBuffer));
+    yield();
     notepadProgram->popState(0);
 }
 void notepadShare(int a){
@@ -69,6 +72,7 @@ void notepadShare(int a){
     }
     Serial.print("meh compression is bytes = ");
     Serial.println(totalBytes);
+    yield();
    /* for (int i = 0; i < 1600; i++){
        // Serial.print(pixelBuffer[i]);
         if (i % 40 == 0){
@@ -104,8 +108,10 @@ void notepadShare(int a){
     Serial.print("COMPRESSED IS : ");
     Serial.println(compressed);*/
 
-    writeToFile("Notepad" + String(pushNote), String((char*)pixelBuffer));
-    yield();
+    Serial.println("POSTING TO STUDENT");
+    //setup_wifi();
+    postToStudent(String((char*)pixelBuffer));
+    Serial.println("DONE POSTING TO STUDENT");
  /*   int sizeMessage = 800;
     char *message = (char*)malloc(sizeMessage);
     message[0] = 'h';
@@ -132,6 +138,7 @@ void drawNotepadDraw(){
             for (int x = 0; x < 40; x++){
                // Serial.print((byte)(read[y * 40 + x]));
                 if ((byte)(read[0]) == 0){
+                    Serial.println("got a 0");
                     pixelBuffer[40 * y + x] = 64; 
                 }
                 else{
