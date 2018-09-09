@@ -55,7 +55,14 @@ void notepadShare(int a){
 
     writeToFile("Notepad" + String(pushNote), String((char*)pixelBuffer));
     yield();
-
+    char *message = (char*)malloc(6);
+    message[0] = 'h';
+    message[1] = 'u';
+    message[2] = 'l';
+    message[3] = 'l';
+    message[4] = 'o';
+    message[5] = 0;
+    notepadProgram->sendMailOut(message, 6);
 }
 
 void drawNotepadDraw(){
