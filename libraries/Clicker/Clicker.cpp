@@ -10,9 +10,29 @@
 #include "ClickerGlobals.h"
 #include <graphics.h>
 #include <KeyboardScreen.h>
+#include <Networking.h>
 
 void submitResponse(int selection) {
-  
+  String s;
+  fillRect(70, 50, 210, 35, BLACK);
+  yield();
+
+  switch (selection) {
+  case 0:
+    s = "A";
+    break;
+  case 1:
+    s = "B";
+    break;
+  case 2:
+    s = "C";
+    break;
+  case 3:
+    s = "D";
+    break;
+  }
+  char *text = clickerServer(s);
+  drawText(text, 72, 50, WHITE, 4);
 }
 
 void quitClicker(int screen) {
@@ -25,7 +45,7 @@ void initClicker(){
 void drawClicker(){
     fillScreen(PINK);
     drawText("Clicker", 70, 10, BLACK, 4);
-    fillRect(70, 50, 180, 35, BLACK);
+    fillRect(70, 50, 210, 35, BLACK);
     int w = width();
     add_button(w / 2 - 20, //x
 	       90, //y
