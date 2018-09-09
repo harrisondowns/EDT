@@ -14,7 +14,7 @@ const char* password = "eeejjjmmm";
 
 const char* host = "cryptic-waters-95987.herokuapp.com";
 
-#define ADMIN true
+#define ADMIN false
 
 boolean isAdmin() {
   return ADMIN;
