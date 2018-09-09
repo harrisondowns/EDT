@@ -17,6 +17,8 @@
 #include <FS.h>
 #include <graphics.h>
 #include <Calculator.h>
+#include <Clicker.h>
+#include <FlashCards.h>
 
 #define DEBUG_DELAY 0
 
@@ -41,6 +43,7 @@ void setup() {
   core->addProgram(makeSpringboard());
   core->addProgram(makeCalculator());
   core->addProgram(makeNotepad());
+  core->addProgram(makeFlashCards());
   core->addProgram(makeClicker());
   core->initBackbone();
 

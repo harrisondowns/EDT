@@ -5,4 +5,4 @@
 
 BackboneProgram* clickerProgram;
 
-#endif /* Clicker_hpp */
+#endif /* Clicker_globals_hpp */
