@@ -101,7 +101,7 @@ void drawSpringboard(){
     }
     yield();
     
-    drawText((char *)getTime().c_str(), width() - 100, 3, BLACK, 3);
+    drawText((char *)getTime().c_str(), width() - 100, 3, WHITE, 3);
 }
 
 void drawSpringboard2(){
@@ -120,7 +120,7 @@ void runSpringboard(int delta){
       return;
     }
     fillRect(width() - 100, 3, 100, 50, DARKGREY);
-    drawText(s, width() - 100, 3, BLACK, 3);    
+    drawText(s, width() - 100, 3, WHITE, 3);    
   }
 }
 
