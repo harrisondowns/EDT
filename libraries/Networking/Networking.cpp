@@ -14,7 +14,11 @@ const char* password = "eeejjjmmm";
 
 const char* host = "cryptic-waters-95987.herokuapp.com";
 
-#define ADMIN false
+#define ADMIN true
+
+boolean isAdmin() {
+  return ADMIN;
+}
 
 void setup_wifi() {
   // We start by connecting to a WiFi network
@@ -187,4 +191,33 @@ char *clickerServer(String choice) {
       return "Wrong :(";
     }
   }
+}
+
+String getTime(){
+	WiFiClient client;
+  	const int httpPort = 80;
+  	if (!client.connect(host, httpPort)) {
+   		Serial.println("connection failed");
+    	return "";
+  	}
+  
+	String url = "/getTime";
+	client.print(String("GET ") + url + " HTTP/1.1\r\n" +
+	              "Host: " + host + "\r\n" + 
+	               "Connection: close\r\n\r\n");
+	
+	unsigned long timeout = millis();
+  while (client.available() == 0) {
+    if (millis() - timeout > 5000) {
+    //efe  Serial.println(">>> Client Timeout !");
+      client.stop();
+      return "";
+    }
+  }
+  String line;
+  // Read all the lines of the reply from server and print them to Serial
+  while(client.available()){
+    line = client.readStringUntil('\n');
+  }
+  	return line;
 }

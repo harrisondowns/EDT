@@ -12,7 +12,7 @@
 #include "Adafruit_ILI9341.h"
 #include "graphics.h"
 #include "Mail.h"
-
+#include <Networking.h>
 
 /*
 int checkForMessage(byte progNum);
@@ -94,9 +94,14 @@ void drawSpringboard(){
     drawText("C", 240, 130, BLACK, 3);
     drawText("D", 270, 130, BLACK, 3);
 
+    if (isAdmin()) {
+      drawText("Teacher Edition", 3, height() - 15, WHITE, 2);
+    } else {
+      drawText("Student Edition", 3, height() - 15, WHITE, 2);
+    }
+    yield();
     
-
-    
+    drawText((char *)getTime().c_str(), width() - 100, 3, BLACK, 3);
 }
 
 void drawSpringboard2(){
@@ -109,7 +114,14 @@ void setCore(BackboneCore *c){
 }
 
 void runSpringboard(int delta){
-	
+  if (delta % 10000 == 0) {
+    char *s = (char *)getTime().c_str();
+    if (s[0] != '0' && s[0] != '1') {
+      return;
+    }
+    fillRect(width() - 100, 3, 100, 50, DARKGREY);
+    drawText(s, width() - 100, 3, BLACK, 3);    
+  }
 }
 
 void runFakeboard(int delta){
