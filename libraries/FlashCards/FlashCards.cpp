@@ -16,20 +16,27 @@
 #define NEW_SET 1
 #define KEYBOARD 2
 
-char *title;
-char *description;
-int cardNumber;
+const int MAX_CARDS = 10;
+char **title = (char **) malloc(sizeof (char *) * MAX_CARDS);
+char **description = (char **) malloc(sizeof(char*) * MAX_CARDS);
+int cardNumber = 0;
 boolean titleSet;
 boolean descriptionSet;
 boolean settingTitle;
+
+void clear_text() {
+        drawText(title[cardNumber], 55, 78, PURPLE, 3);
+        drawText(description[cardNumber], 55, 180, PURPLE, 1);
+
+}
 
 void changeToScreen(int program) {
   flashCardsProgram->pushToState(program);
 }
 
 void initNewSet() {
-	title = "    ";
-	description = " ";
+	title[cardNumber] = "    ";
+	description[cardNumber] = " ";
 	cardNumber = 0;
 	titleSet = false;
 	descriptionSet = false;
@@ -51,24 +58,27 @@ void setDescription(int screen) {
 void updateText() {
 	if(settingTitle) {
 		titleSet = true;
-		strcpy(title, get_val());
+		strcpy(title[cardNumber], get_val());
+
 	}
 	else {
 		descriptionSet = true;
-		strcpy(description, get_val());
+		strcpy(description[cardNumber], get_val());
 	}
 }
 
 void saveAndChange(int rip) {
-	//writeToFile("FlashCards" + String(cardNumber), strcat(title, description));
-	title = "   ";
-	description = " ";
-	cardNumber++;
-	titleSet = false;
-	descriptionSet = false;
-	settingTitle = false;
-	fillRect(55, 78, 250, 20, PURPLE);
-	fillRect(55, 180, 20, 200, PURPLE);
+	if (titleSet and descriptionSet) {
+               clear_text();
+               cardNumber++;
+	       title[cardNumber] = "   ";
+	       description[cardNumber] = " ";
+	       titleSet = false;
+	       descriptionSet = false;
+	       settingTitle = false;
+	       //fillRect(55, 78, 250, 20, PURPLE);
+	       //fillRect(55, 180, 20, 200, PURPLE);
+        }
 }
 
 void drawNewSet() {
@@ -76,14 +86,14 @@ void drawNewSet() {
 	fillScreen(PURPLE);
 	add_button(50, 10, 80, 60, 0, KEYBOARD, 2, "Title:", WHITE, BLACK, setTitle);
 	if(titleSet) {
-		drawText(title, 55, 78, WHITE, 3);
+		drawText(title[cardNumber], 55, 78, WHITE, 3);
 	}
 	//else {
 	//	fillRect(55, 78, 250, 20, PURPLE);
 	//}
 	add_button(50, 110, 160, 60, 0, KEYBOARD, 2, "Description:", WHITE, BLACK, setDescription);
 	if(descriptionSet){
-		drawText(description, 55, 180, WHITE, 1);
+		drawText(description[cardNumber], 55, 180, WHITE, 1);
 	}
 	//else {
 	//	fillRect(55, 180, 20, 200, PURPLE);
@@ -125,6 +135,6 @@ BackboneProgram* makeFlashCards() {
   flashCards->addScreen(newSet);
   flashCards->addScreen(getKeyboard(0, flashCards));
   flashCardsProgram = flashCards;
-  
+
   return flashCards;
 }
