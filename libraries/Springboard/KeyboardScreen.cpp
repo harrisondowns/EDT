@@ -12,6 +12,10 @@ char input[MaxLength + 1];
 boolean flagged = false;
 BackboneProgram *prog;
 
+void setProgram(BackboneProgram *p) {
+  prog = p;
+}
+
 void finish(int param) {
         //Serial.println("finished");
         if (used == 0) {

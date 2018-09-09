@@ -43,6 +43,8 @@ void BackboneProgram::checkForStateChange(){
 }
 
 void BackboneProgram::pushToState(int state){
+  Serial.println("pushing to state now");
+  Serial.println(stack.size());
     clear_buttons();
     stack.push_back(currentScreen);
     
@@ -50,10 +52,14 @@ void BackboneProgram::pushToState(int state){
 
     currentScreen->init();
     currentScreen->draw();
+    Serial.println("ending push");
+    Serial.println(stack.size());
 }
 
 void BackboneProgram::popState(int rip){
+  Serial.println("popping the state now");
     clear_buttons();
+    Serial.println(stack.size());
     if (stack.size() > 1){
         currentScreen = stack.back();
         currentScreen->init();
@@ -64,6 +70,7 @@ void BackboneProgram::popState(int rip){
         stack.pop_back();
         goToSpringboard = true;
     }
+    Serial.println(stack.size());
 }
 
 boolean validMail = false;

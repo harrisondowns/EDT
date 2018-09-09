@@ -50,6 +50,7 @@ void setIntercept(int screen) {
 }
 
 void checkParams() {
+  Serial.println("check for calculator values");
   if (check_flag()) {
     char *num = get_val();
     int offset = 1;
@@ -239,6 +240,7 @@ void runGraph(int delta){
 }
 
 void initCalculator(){
+  setProgram(calcProgram);
     arg1 = 0;
     arg2 = 0;
     operand = 0;

@@ -99,7 +99,7 @@ void runNewSet(int delta) {
 }
 
 void initFlashCards() {
-
+  setProgram(flashCardsProgram);
 }
 
 void drawFlashCards() {
