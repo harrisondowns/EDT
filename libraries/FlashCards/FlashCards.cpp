@@ -27,7 +27,6 @@ boolean settingTitle;
 void clear_text() {
         drawText(title[cardNumber], 55, 78, PURPLE, 3);
         drawText(description[cardNumber], 55, 180, PURPLE, 1);
-
 }
 
 void changeToScreen(int program) {
@@ -35,8 +34,8 @@ void changeToScreen(int program) {
 }
 
 void initNewSet() {
-	title[cardNumber] = "    ";
-	description[cardNumber] = " ";
+	title[cardNumber] = new char[18];
+	description[cardNumber] = new char[18];
 	cardNumber = 0;
 	titleSet = false;
 	descriptionSet = false;
@@ -68,6 +67,7 @@ void updateText() {
 }
 
 void saveAndChange(int rip) {
+	Serial.println("saving?");
 	if (titleSet and descriptionSet) {
                clear_text();
                cardNumber++;
@@ -76,9 +76,10 @@ void saveAndChange(int rip) {
 	       titleSet = false;
 	       descriptionSet = false;
 	       settingTitle = false;
-	       //fillRect(55, 78, 250, 20, PURPLE);
-	       //fillRect(55, 180, 20, 200, PURPLE);
-        }
+    }
+    else {
+    	Serial.println("doooooooo");
+    }
 }
 
 void drawNewSet() {
@@ -99,7 +100,7 @@ void drawNewSet() {
 	//	fillRect(55, 180, 20, 200, PURPLE);
 	//}
 
-	add_button(5, 180, 50, 50, 0, 0, 1, "Next", WHITE, BLACK, saveAndChange);
+	add_button(5, 180, 300, 50, 0, 0, 1, "Next", WHITE, BLACK, saveAndChange);
 
 	draw_all_buttons();
 }
@@ -109,7 +110,7 @@ void runNewSet(int delta) {
 }
 
 void initFlashCards() {
-  setProgram(flashCardsProgram);
+
 }
 
 void drawFlashCards() {
