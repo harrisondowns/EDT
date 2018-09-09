@@ -9,10 +9,11 @@
 #include "Notepad.h"
 #include "NotepadGlobals.h"
 #include "graphics.h"
+#include "Networking.h"
 #include "NotepadDraw.h"
 #include "Mail.h"
 //#include "Mail.h"
-
+void drawNotepadHome();
 void initNotepadHome(){
 	Serial.println("Home reached");
 	if (fileExists("NotepadCount")){
@@ -34,15 +35,46 @@ void callNote(int id){
 }
 
 void popToSb(int rip){
+	writeToFile("NotepadCount", String(numNotes));
 	notepadProgram->popState(rip);
+}
+
+void clearNotes(int rip){
+	for (int i = numNotes; i > 0; i--){
+		if (fileExists("Notepad" + String(i))){
+			deleteFile("Notepad" + String(i));
+		}
+	}
+	writeToFile("NotepadCount", "1");
+	numNotes = 1;
+	drawNotepadHome();
+}
+
+void refreshNote(int rip){
+	String l = getStudent();
+	Serial.println("");
+	Serial.println(l);
+	Serial.println("");
+
+	Serial.println("writing to Notepad" + String(numNotes));
+	writeToFile("Notepad" + String(numNotes), l);
+	writeToFile("NotepadCount", String(numNotes));
+	numNotes++;
+	drawNotepadHome();
 }
 
 void drawNotepadHome(){
     fillScreen(LIGHTGREY);
 
-    drawText("Notes", 60, 10, BLACK, 8);
+    drawText("Notes", 60, 10, BLACK, 5);
 
     int n = add_button(10, 10, 40, 40, 2, 0, 1, "BACK", WHITE, BLACK, popToSb);
+    draw_button(n);
+
+    n = add_button(270, 10, 50, 50, 2, 0, 1, "REFRESH", WHITE, BLACK, refreshNote);
+    draw_button(n);
+
+    n = add_button(210, 10, 50, 50, 2, 0, 1, "CLEAR", WHITE, BLACK, clearNotes);
     draw_button(n);
 
     for (int i = 0; i < numNotes; i++){
