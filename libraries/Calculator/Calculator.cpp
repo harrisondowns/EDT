@@ -1,6 +1,5 @@
 //
 //  Calculator.cpp
-//  Backbone-2018.Tests
 //
 //  Created by Harrison Downs on 7/8/18.
 //  Copyright © 2018 Harrison Downs. All rights reserved.
@@ -48,10 +47,6 @@ void setSlope(int screen) {
 void setIntercept(int screen) {
   settingSlope = false;
   changeScreen(screen);
-}
-
-void setArg1(int screen) {
-
 }
 
 void checkParams() {
@@ -249,10 +244,6 @@ void initCalculator(){
     operand = 0;
 }
 
-void setArgs(int screen) {
-    changeScreen(screen);
-}
-
 void drawExpression() {
 
     if(operand != 0) {
@@ -334,7 +325,7 @@ void drawCalculator(){
     drawExpression();
     //drawText(expression, 245, 60, WHITE, 3);
 
-    add_button(15, 170, 180, 55, 0, KEYBOARD, 3, "Num", WHITE, BLACK, setArgs);
+    add_button(15, 170, 180, 55, 0, KEYBOARD, 3, "Num", WHITE, BLACK, changeScreen);
     add_button(215, 170, 90, 55, 0, 0, 2, "Clear", WHITE, BLACK, clearExpression);
     add_button(85, 100, 55, 55, 0, MULTIPLY, 4, "x", WHITE, BLACK, setOperand);
     add_button(15, 100, 55, 55, 0, DIVIDE, 4, "/", WHITE, BLACK, setOperand);
