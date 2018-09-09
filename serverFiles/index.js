@@ -26,13 +26,25 @@ app.post('/teacherPut', function(req, res) {
 });
 
 var answer = "";
+var answers = "";
 
 app.get('/getAnswer', function(req, res) {
     res.send(answer);
 });
 
+app.get('/getAnswers',function(req, res) {
+    res.send(answers);
+});
+
 app.post('/setAnswer', function(req, res) {
     answer = req.body.answer;
+    answers = "";
+    res.send(200);
+});
+
+app.post('/submitAnswer', function(req, res) {
+    answ = req.body.answer;
+    answers = answers + " " + answ;
     res.send(200);
 });
 	
