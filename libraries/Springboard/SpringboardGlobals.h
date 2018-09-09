@@ -8,6 +8,6 @@ BackboneProgram* program;
 BackboneCore *coreSB;
 
 int numPrograms = 4;
-char* programStrings[4] = {"Calc", "Note", "Cards", "Clicker"};
+char* programStrings[4] = {"Calculator", "Notepad", "FlashCards", "Clicker"};
 
 #endif /* Springboard_hpp */
